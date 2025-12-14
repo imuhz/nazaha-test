@@ -1,0 +1,2573 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>موقع الأنظمة السعودية - نظام مذاكرة تفاعلي</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0d3b66;
+            --secondary-color: #f4b942;
+            --accent-color: #1a936f;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --danger-color: #e63946;
+            --success-color: #2a9d8f;
+            --border-radius: 10px;
+            --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* التصميم العام */
+        header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #1a5a9e 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: var(--box-shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo i {
+            font-size: 2rem;
+            color: var(--secondary-color);
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+        }
+
+        .logo span {
+            color: var(--secondary-color);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 8px 15px;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
+        }
+
+        nav a.active {
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* القسم الرئيسي */
+        .hero {
+            padding: 60px 0;
+            background: linear-gradient(rgba(13, 59, 102, 0.9), rgba(13, 59, 102, 0.9)), url('https://images.unsplash.com/photo-1542744095-fcf48d80b0fd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+            margin-bottom: 40px;
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 30px;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            min-width: 150px;
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-item i {
+            font-size: 2rem;
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        /* أقسام الموقع */
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .section-title h2 {
+            font-size: 2rem;
+            color: var(--primary-color);
+            display: inline-block;
+        }
+
+        .section-title h2:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 50%;
+            transform: translateX(50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--secondary-color);
+            border-radius: 2px;
+        }
+
+        .section-title i {
+            color: var(--secondary-color);
+            margin-left: 10px;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 25px;
+            margin-bottom: 30px;
+            transition: var(--transition);
+            border-top: 5px solid var(--primary-color);
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-title {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-title i {
+            color: var(--secondary-color);
+        }
+
+        /* أدوات البحث والتصفية */
+        .search-filter-container {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 300px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 15px 45px 15px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .search-box input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(13, 59, 102, 0.1);
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+
+        .filter-dropdown {
+            padding: 15px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            background-color: white;
+            cursor: pointer;
+            min-width: 200px;
+        }
+
+        .filter-dropdown:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+
+        /* قسم الأنظمة المحسّن */
+        .systems-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .system-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 25px;
+            transition: var(--transition);
+            border-top: 5px solid;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .system-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .system-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .system-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .system-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .system-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+
+        .system-meta {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            color: #666;
+        }
+
+        .system-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .system-meta-item i {
+            color: var(--secondary-color);
+        }
+
+        .system-description {
+            color: #666;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .system-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: auto;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border-radius: var(--border-radius);
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1rem;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #0a2d4d;
+            transform: translateY(-3px);
+        }
+
+        .btn-secondary {
+            background-color: #e9ecef;
+            color: var(--dark-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: #dee2e6;
+            transform: translateY(-3px);
+        }
+
+        .btn-accent {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .btn-accent:hover {
+            background-color: #16825f;
+            transform: translateY(-3px);
+        }
+
+        /* قسم العقوبات المحسّن */
+        .penalties-container {
+            margin-top: 20px;
+        }
+
+        .system-penalties-group {
+            margin-bottom: 40px;
+        }
+
+        .system-penalties-group h3 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .penalties-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+        }
+
+        .penalty-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 20px;
+            border-right: 5px solid;
+            transition: var(--transition);
+        }
+
+        .penalty-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .penalty-card.severe {
+            border-right-color: var(--danger-color);
+        }
+
+        .penalty-card.medium {
+            border-right-color: var(--secondary-color);
+        }
+
+        .penalty-card.light {
+            border-right-color: var(--accent-color);
+        }
+
+        .penalty-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .penalty-severity {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .severe-badge {
+            background-color: #ffebee;
+            color: var(--danger-color);
+        }
+
+        .medium-badge {
+            background-color: #fff3e0;
+            color: #e65100;
+        }
+
+        .light-badge {
+            background-color: #e8f5e9;
+            color: var(--accent-color);
+        }
+
+        .penalty-title {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--dark-color);
+        }
+
+        .penalty-details {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+
+        .penalty-sentence {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            font-size: 1.1rem;
+            grid-column: 1 / -1;
+        }
+
+        .no-results i {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #ddd;
+        }
+
+        /* صفحة تفاصيل النظام */
+        .system-detail-container {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+
+        .system-detail-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .system-detail-title {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+        }
+
+        .system-detail-meta {
+            display: flex;
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .system-content {
+            line-height: 1.8;
+        }
+
+        .system-content h3 {
+            color: var(--primary-color);
+            margin: 25px 0 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .system-content p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .material-item {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-right: 4px solid var(--primary-color);
+        }
+
+        .material-number {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .material-content {
+            line-height: 1.7;
+        }
+
+        .back-btn {
+            margin-bottom: 20px;
+            display: inline-flex;
+        }
+
+        /* نظام الاختبارات */
+        .quiz-container {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .quiz-info {
+            display: flex;
+            gap: 20px;
+        }
+
+        .quiz-info-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .quiz-question {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            line-height: 1.8;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            border-right: 5px solid var(--primary-color);
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .quiz-option {
+            background-color: #f8f9fa;
+            padding: 18px 20px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .quiz-option:hover {
+            background-color: #e9ecef;
+            transform: translateX(-5px);
+        }
+
+        .quiz-option.selected {
+            border-color: var(--primary-color);
+            background-color: #e3f2fd;
+        }
+
+        .quiz-option.correct {
+            border-color: var(--success-color);
+            background-color: #e8f5e9;
+        }
+
+        .quiz-option.incorrect {
+            border-color: var(--danger-color);
+            background-color: #ffebee;
+        }
+
+        .option-letter {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            font-weight: bold;
+        }
+
+        .quiz-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        /* صفحة المطور */
+        .developer-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 40px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .developer-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+            color: white;
+            font-size: 3.5rem;
+        }
+
+        .developer-name {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .developer-title {
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+        }
+
+        .developer-contact {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+
+        .contact-item:hover {
+            background-color: #e9ecef;
+            transform: translateX(-5px);
+        }
+
+        .contact-item i {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+
+        /* تذييل الصفحة */
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 40px 0 20px;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .footer-section h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-section p {
+            margin-bottom: 15px;
+            opacity: 0.8;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+            color: var(--secondary-color);
+            transform: translateX(-5px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        /* تصميم متجاوب */
+        @media (max-width: 992px) {
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            nav ul {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero h2 {
+                font-size: 2rem;
+            }
+
+            .stats {
+                gap: 20px;
+            }
+
+            .stat-item {
+                min-width: 120px;
+            }
+
+            .penalties-grid,
+            .systems-container {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                display: none;
+                width: 100%;
+                margin-top: 20px;
+            }
+
+            nav.active {
+                display: block;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+                position: absolute;
+                left: 20px;
+                top: 25px;
+            }
+
+            .header-content {
+                flex-direction: row;
+                justify-content: center;
+                position: relative;
+            }
+
+            .hero {
+                padding: 40px 0;
+            }
+
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+
+            .stats {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .stat-item {
+                width: 100%;
+                max-width: 250px;
+            }
+
+            .search-filter-container {
+                flex-direction: column;
+            }
+
+            .search-box,
+            .filter-dropdown {
+                min-width: 100%;
+            }
+
+            .penalties-grid,
+            .systems-container {
+                grid-template-columns: 1fr;
+            }
+
+            .quiz-controls {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .system-detail-header {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+
+        /* أنماط إضافية للتفاعل */
+        .hidden {
+            display: none !important;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .progress-bar {
+            height: 8px;
+            background-color: #e0e0e0;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background-color: var(--accent-color);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- رأس الصفحة -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                
+                <div class="logo">
+                    <i class="fas fa-scale-balanced"></i>
+                    <h1>موقع <span>الأنظمة السعودية</span></h1>
+                </div>
+                
+                <nav id="mainNav">
+                    <ul>
+                        <li><a href="#home" class="active" data-section="home"><i class="fas fa-home"></i> الرئيسية</a></li>
+                        <li><a href="#systems" data-section="systems"><i class="fas fa-book-law"></i> الأنظمة</a></li>
+                        <li><a href="#penalties" data-section="penalties"><i class="fas fa-gavel"></i> العقوبات</a></li>
+                        <li><a href="#quiz" data-section="quiz"><i class="fas fa-question-circle"></i> الاختبارات</a></li>
+                        <li><a href="#developer" data-section="developer"><i class="fas fa-user-tie"></i> المطور</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- القسم الرئيسي -->
+    <section id="home" class="section active-section">
+        <div class="hero">
+            <div class="container">
+                <h2>مرحباً بكم في موقع الأنظمة السعودية</h2>
+                <p>منصة شاملة لدراسة وفهم الأنظمة السعودية بشكل تفاعلي وسهل، مع إمكانية الاختبار الذاتي لضمان الإلمام بالمواد النظامية.</p>
+                
+                <div class="stats">
+                    <div class="stat-item">
+                        <i class="fas fa-book"></i>
+                        <span class="stat-number">6</span>
+                        <span class="stat-label">أنظمة متاحة</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-file-alt"></i>
+                        <span class="stat-number">500+</span>
+                        <span class="stat-label">مادة نظامية</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-question"></i>
+                        <span class="stat-number">500</span>
+                        <span class="stat-label">سؤال اختباري</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span class="stat-number">100%</span>
+                        <span class="stat-label">سهولة المذاكرة</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="section-title">
+                <h2><i class="fas fa-info-circle"></i> عن الموقع</h2>
+            </div>
+            
+            <div class="card">
+                <div class="card-title">
+                    <i class="fas fa-bullseye"></i>
+                    <h3>أهداف الموقع</h3>
+                </div>
+                <p>تم إنشاء هذا الموقع لتسهيل عملية دراسة الأنظمة السعودية على الطلاب والباحثين والمهتمين بالشأن القانوني. من خلال تقديم محتوى منظم بطريقة سهلة الفهم والحفظ، مع أدوات تفاعلية تجعل عملية التعلم أكثر فعالية.</p>
+            </div>
+            
+            <div class="card">
+                <div class="card-title">
+                    <i class="fas fa-star"></i>
+                    <h3>مميزات الموقع</h3>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px;">
+                    <div>
+                        <h4 style="color: var(--primary-color); margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
+                            <i class="fas fa-book-open" style="color: var(--secondary-color);"></i>
+                            محتوى شامل
+                        </h4>
+                        <p>جميع الأنظمة مأخوذة من مصادرها الرسمية حرفياً وبشكل كامل.</p>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--primary-color); margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
+                            <i class="fas fa-palette" style="color: var(--secondary-color);"></i>
+                            تصميم بصري مميز
+                        </h4>
+                        <p>ألوان ورموز وعلامات مميزة لكل قسم لتسهيل التمييز والحفظ.</p>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--primary-color); margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
+                            <i class="fas fa-brain" style="color: var(--secondary-color);"></i>
+                            اختبارات تفاعلية
+                        </h4>
+                        <p>بنك أسئلة متجدد مع 500 سؤال، يغير الأسئلة في كل مرة.</p>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--primary-color); margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
+                            <i class="fas fa-search" style="color: var(--secondary-color);"></i>
+                            بحث متقدم
+                        </h4>
+                        <p>إمكانية البحث عن مصطلحات أو أرقام مواد في جميع الأنظمة والعقوبات.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم الأنظمة المحسّن -->
+    <section id="systems" class="section hidden">
+        <div class="container">
+            <div class="section-title">
+                <h2><i class="fas fa-book"></i> الأنظمة السعودية</h2>
+            </div>
+            
+            <div class="search-filter-container">
+                <div class="search-box">
+                    <input type="text" id="systemSearch" placeholder="ابحث عن نظام أو مادة أو مصطلح...">
+                    <i class="fas fa-search"></i>
+                </div>
+                <select class="filter-dropdown" id="systemFilter">
+                    <option value="all">جميع الأنظمة</option>
+                    <option value="anti-corruption">مكافحة الفساد</option>
+                    <option value="criminal">جزائي</option>
+                    <option value="financial">مالي</option>
+                    <option value="administrative">إداري</option>
+                </select>
+            </div>
+            
+            <div id="systemsList" class="systems-container">
+                <!-- سيتم تعبئة الأنظمة بواسطة JavaScript -->
+            </div>
+            
+            <div id="systemDetail" class="hidden">
+                <button class="btn btn-secondary back-btn" id="backToSystems">
+                    <i class="fas fa-arrow-right"></i> العودة لقائمة الأنظمة
+                </button>
+                <div class="system-detail-container" id="systemDetailContent">
+                    <!-- سيتم تعبئة المحتوى بواسطة JavaScript -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم العقوبات المحسّن -->
+    <section id="penalties" class="section hidden">
+        <div class="container">
+            <div class="section-title">
+                <h2><i class="fas fa-gavel"></i> جدول العقوبات</h2>
+            </div>
+            
+            <div class="search-filter-container">
+                <div class="search-box">
+                    <input type="text" id="penaltySearch" placeholder="ابحث عن عقوبة أو جريمة أو مصطلح...">
+                    <i class="fas fa-search"></i>
+                </div>
+                <select class="filter-dropdown" id="penaltyFilter">
+                    <option value="all">جميع العقوبات</option>
+                    <option value="severe">عقوبات شديدة</option>
+                    <option value="medium">عقوبات متوسطة</option>
+                    <option value="light">عقوبات خفيفة</option>
+                </select>
+            </div>
+            
+            <div class="penalties-container" id="penaltiesList">
+                <!-- سيتم تعبئة العقوبات بواسطة JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم الاختبارات -->
+    <section id="quiz" class="section hidden">
+        <div class="container">
+            <div class="section-title">
+                <h2><i class="fas fa-question-circle"></i> الاختبارات التفاعلية</h2>
+            </div>
+            
+            <div class="quiz-container" id="quizContainer">
+                <div class="quiz-header">
+                    <h3>اختبار الأنظمة السعودية</h3>
+                    <div class="quiz-info">
+                        <div class="quiz-info-item">
+                            <i class="fas fa-question"></i>
+                            <span id="questionCounter">سؤال 1 من 10</span>
+                        </div>
+                        <div class="quiz-info-item">
+                            <i class="fas fa-star"></i>
+                            <span id="score">النقاط: 0</span>
+                        </div>
+                        <div class="quiz-info-item">
+                            <i class="fas fa-clock"></i>
+                            <span id="timer">الوقت: 05:00</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="progress-bar">
+                    <div class="progress" id="quizProgress" style="width: 10%"></div>
+                </div>
+                
+                <div class="quiz-question" id="questionText">
+                    <!-- سيتم تعبئة السؤال بواسطة JavaScript -->
+                </div>
+                
+                <div class="quiz-options" id="optionsContainer">
+                    <!-- سيتم تعبئة الخيارات بواسطة JavaScript -->
+                </div>
+                
+                <div class="quiz-controls">
+                    <button class="btn btn-danger" id="endQuizBtn">
+                        <i class="fas fa-stop-circle"></i> إنهاء الاختبار
+                    </button>
+                    <button class="btn btn-primary" id="nextQuestionBtn">
+                        <i class="fas fa-arrow-left"></i> السؤال التالي
+                    </button>
+                </div>
+            </div>
+            
+            <div class="card hidden" id="quizResults">
+                <div class="card-title">
+                    <i class="fas fa-chart-bar"></i>
+                    <h3>نتيجة الاختبار</h3>
+                </div>
+                <div style="text-align: center; padding: 30px;">
+                    <h2 id="finalScore" style="font-size: 3rem; color: var(--primary-color); margin-bottom: 20px;">0/10</h2>
+                    <p id="resultMessage" style="font-size: 1.2rem; margin-bottom: 30px;">...</p>
+                    <button class="btn btn-accent" id="restartQuizBtn">
+                        <i class="fas fa-redo"></i> بدء اختبار جديد
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم المطور -->
+    <section id="developer" class="section hidden">
+        <div class="container">
+            <div class="section-title">
+                <h2><i class="fas fa-user-tie"></i> معلومات المطور</h2>
+            </div>
+            
+            <div class="developer-card">
+                <div class="developer-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                
+                <h2 class="developer-name">محمد سعيد أحمد الزهراني</h2>
+                <p class="developer-title">مطور واجهات ويب وتطبيقات تفاعلية</p>
+                
+                <p>مطور هذا الموقع الذي يهدف إلى تسهيل دراسة الأنظمة السعودية وجعل عملية المذاكرة أكثر تفاعلية وسهولة.</p>
+                
+                <div class="developer-contact">
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span>0598227202</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>developer@example.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>المملكة العربية السعودية</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- تذييل الصفحة -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>عن الموقع</h3>
+                    <p>منصة إلكترونية شاملة تهدف إلى تسهيل دراسة الأنظمة السعودية من خلال محتوى منظم واختبارات تفاعلية.</p>
+                    <p>جميع المحتويات مأخوذة من المصادر الرسمية حرفياً.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>روابط سريعة</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home" data-section="home"><i class="fas fa-home"></i> الرئيسية</a></li>
+                        <li><a href="#systems" data-section="systems"><i class="fas fa-book-law"></i> الأنظمة</a></li>
+                        <li><a href="#penalties" data-section="penalties"><i class="fas fa-gavel"></i> العقوبات</a></li>
+                        <li><a href="#quiz" data-section="quiz"><i class="fas fa-question-circle"></i> الاختبارات</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>معلومات الاتصال</h3>
+                    <p><i class="fas fa-user"></i> المطور: محمد سعيد أحمد الزهراني</p>
+                    <p><i class="fas fa-phone"></i> الهاتف: 0598227202</p>
+                    <p><i class="fas fa-map-marker-alt"></i> المملكة العربية السعودية</p>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>© 2023 موقع الأنظمة السعودية. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // بيانات الأنظمة الكاملة من الملفات
+        const systemsData = [
+            {
+                id: 1,
+                name: "النظام الجزائي لجرائم التزوير",
+                year: "1445 هـ",
+                articles: 28,
+                category: "جزائي",
+                icon: "fas fa-file-signature",
+                color: "#0d3b66",
+                description: "ينظم هذا النظام جرائم التزوير بأنواعها المختلفة والعقوبات المقررة لها، ويحدد طرق التزوير والجرائم الشديدة والمخفضة.",
+                content: `
+                    <div class="system-detail-header">
+                        <div>
+                            <h1 class="system-detail-title">النظام الجزائي لجرائم التزوير</h1>
+                            <div class="system-detail-meta">
+                                <div class="system-meta-item">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    <span>سنة الصدور: 1445 هـ</span>
+                                </div>
+                                <div class="system-meta-item">
+                                    <i class="fas fa-file-alt"></i>
+                                    <span>عدد المواد: 28 مادة</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="system-icon" style="background: linear-gradient(135deg, #0d3b66, #1a5a9e);">
+                            <i class="fas fa-file-signature"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="system-content">
+                        <h3><i class="fas fa-gavel"></i> التعريفات القانونية</h3>
+                        
+                        <div class="material-item">
+                            <div class="material-number">المادة الأولى</div>
+                            <div class="material-content">
+                                <p><strong>التزوير:</strong> كل تغيير للحقيقة بإحدى الطرق المنصوص عليها في النظام، يحدث بسوء نية قصداً لاستعمال فيما يجميه النظام من محرر أو خاتم أو علامة أو طابع، وكان من شأن هذا التغيير أن يتسبب في ضرر مادي أو معنوي أو اجتماعي لأي شخص.</p>
+                                <p><strong>الخاتم:</strong> الأداة التي تمهر بها المحررات للتوقيع، أو الأثر المطبع منها.</p>
+                                <p><strong>الطابع:</strong> الملصق أو ما يقوم مقامه مما يطبع آلياً أو إلكترونياً ويستخدم لأغراض البريد أو تحصيل الإيرادات العامة.</p>
+                                <p><strong>العلامة:</strong> الإشارة أو الرمز التي تستعملها جهة عامة للدلالة على معنى خاص بها يرتب أثراً نظامياً.</p>
+                                <p><strong>المحرر:</strong> كل مسطور يتضمن حروفاً أو علامات ينقل بقارئها الفكر إلى معنى معين بصرف النظر عن الوعاء الذي كتب أو حفظ فيه، بما في ذلك وسائل تقنية المعلومات.</p>
+                            </div>
+                        </div>
+                        
+                        <h3><i class="fas fa-list-ol"></i> طرق التزوير</h3>
+                        
+                        <div class="material-item">
+                            <div class="material-number">المادة الثانية</div>
+                            <div class="material-content">
+                                <p>يفعل التزوير بإحدى الطرق الآتية:</p>
+                                <ol>
+                                    <li>صنع محرر أو خاتم أو علامة أو طابع، لا أصل له أو مقلد من الأصل أو معروف عنه.</li>
+                                    <li>تضمين المحرر خاتماً أو توقيعاً أو بصمة أو علامة أو طابعاً، لا أصل له أو مقلداً من الأصل أو معروفاً عنه.</li>
+                                    <li>تضمين المحرر توقيعاً صحيحاً أو بصمة صحيحة، حصل على أي منهما بطريق الخداع.</li>
+                                    <li>التغيير أو التبديل في محرر أو خاتم أو علامة أو طابع، سواء وقع ذلك بطريق الإضافة أو الحذف أو الإبدال، أو الإتلاف الجزئي للمحرر الذي يغير من مضمونه.</li>
+                                    <li>التغيير في صورة شخصية في محرر، أو استبدال صورة شخص آخر بها.</li>
+                                    <li>تضمين المحرر واقعة غير صحيحة بجعلها تبدو واقعة صحيحة، أو ترك تضمين المحرر واقعة كان الفاعل عالماً بوجوب تضمينها فيه.</li>
+                                    <li>تغيير إقرار ذوي الشأن الذي كان الغرض من تحرير المحرر إدراجه فيه.</li>
+                                    <li>إساءة استخدام توقيع أو بصمة على بياض أو سلم إليه.</li>
+                                </ol>
+                            </div>
+                        </div>
+                        
+                        <h3><i class="fas fa-balance-scale"></i> الجرائم والعقوبات</h3>
+                        
+                        <div class="material-item">
+                            <div class="material-number">المادة الثالثة</div>
+                            <div class="material-content">
+                                <p><strong>تزوير خاتم الدولة، أو خاتم الملك أو ولي العهد أو رئيس مجلس الوزراء أو أحد نوابه، أو خاتم الديوان الملكي أو ديوان ولي العهد.</strong></p>
+                                <p><strong>العقوبة:</strong> السجن من ثلاث إلى عشر سنوات وبغرامة لا تزيد على مليون ريال.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="material-item">
+                            <div class="material-number">المادة الرابعة</div>
+                            <div class="material-content">
+                                <p><strong>تزوير خاتماً أو علامة منسوبة إلى جهة عامة، أو إلى أحد موظفيها بصفته الوظيفية.</strong></p>
+                                <p><strong>العقوبة:</strong> السجن من سنة إلى سبع سنوات وبغرامة لا تزيد على سبعمائة ألف ريال.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="material-item">
+                            <div class="material-number">المادة الحادية عشرة</div>
+                            <div class="material-content">
+                                <p><strong>تزوير سندات أو أوراق ذات قيمة مما تصدره الخزينة العامة.</strong></p>
+                                <p><strong>العقوبة:</strong> السجن من سنتين إلى سبع سنوات وبغرامة لا تزيد على مليون ريال، مع إلزامه بدفع ما فوته على الخزينة العامة.</p>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                id: 2,
+                name: "نظام هيئة الرقابة ومكافحة الفساد",
+                year: "1446 هـ",
+                articles: 24,
+                category: "مكافحة الفساد",
+                icon: "fas fa-shield-alt",
+                color: "#1a936f",
+                description: "ينشئ هذا النظام هيئة الرقابة ومكافحة الفساد ويحدد اختصاصاتها ويهدف إلى حماية النزاهة وتعزيز الشفافية ومكافحة الفساد الإداري والمالي.",
+                content: `
+                    <div class="system-detail-header">
+                        <div>
+                            <h1 class="system-detail-title">نظام هيئة الرقابة ومكافحة الفساد</h1>
+                            <div class="system-detail-meta">
+                                <div class="system-meta-item">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    <span>سنة الصدور: 1446 هـ</span>
+                                </div>
+                                <div class="system-meta-item">
+                                    <i class="fas fa-file-alt"></i>
+                                    <span>عدد المواد: 24 مادة</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="system-icon" style="background: linear-gradient(135deg, #1a936f, #2a9d8f);">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="system-content">
+                        <h3><i class="fas fa-book"></i> الباب الأول: تعريفات</h3>
+                        
+                        <div class="material-item">
+                            <div class="material-number">المادة الأولى</div>
+                            <div class="material-content">
+                                <p>يقصد بالكلمات والعبارات الآتية - أينما وردت في هذا النظام- المعاني الموضحة أمام كل منها:</p>
+                                <p><strong>النظام:</strong> نظام هيئة الرقابة ومكافحة الفساد.</p>
+                                <p><strong>الهيئة:</strong> هيئة الرقابة ومكافحة الفساد.</p>
+                                <p><strong>الرئيس:</strong> رئيس الهيئة.</p>
+                                <p><strong>الوحدة:</strong> وحدة التحقيق والادعاء الجنائي.</p>
+                                <p><strong>الجهات العامة:</strong> الوزارات والمراكز الحكومية والهيئات والمصالح والمؤسسات العامة والأجهزة ذات الشخصية الاعتبارية العامة المستقلة أو أي كيان عام آخر.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="material-item">
+                            <div class="material-number">المادة الثانية</div>
+                            <div class="material-content">
+                                <p>يعتبر - لأغراض تطبيق النظام- الجرائم الآتية جرائم فساد:</p>
+                                <ol>
+                                    <li>جرائم الرشوة.</li>
+                                    <li>جرائم الاعتداء على المال العام.</li>
+                                    <li>جرائم إساءة استعمال السلطة.</li>
+                                    <li>أي جريمة أخرى ينص على أنها جريمة فساد بناءً على نظام.</li>
+                                </ol>
+                            </div>
+                        </div>
+                        
+                        <h3><i class="fas fa-tasks"></i> الباب الثاني: جهاز الهيئة ومهماته واختصاصاته</h3>
+                        
+                        <div class="material-item">
+                            <div class="material-number">المادة الثالثة</div>
+                            <div class="material-content">
+                                <p>1. ترتبط الهيئة بالملك، وتتمتع بالشخصية الاعتبارية والاستقلال المالي والإداري.</p>
+                                <p>2. يكون مقر الهيئة الرئيس في مدينة الرياض، ولها أن تنشئ فروعاً أو مكاتب داخل المملكة بحسب الحاجة.</p>
+                                <p>3. تباشر الهيئة عملها بكل حياد ودون تأثير من أي جهة، وليس لأحد التدخل في عملها.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="material-item">
+                            <div class="material-number">المادة الرابعة</div>
+                            <div class="material-content">
+                                <p>تهتم الهيئة بالرقابة الإدارية على الجهات العامة، وحماية النزاهة وتعزيز الشفافية، ومكافحة الفساد؛ ولها في سبيل ذلك الاختصاصات الآتية:</p>
+                                <ol>
+                                    <li>إجراء الرقابة اللازمة للكشف عن المخالفات الإدارية وجرائم الفساد، واتخاذ ما يلزم في شأنها.</li>
+                                    <li>تلقي الشكاوى والبلاغات المتصلة بالمخالفات الإدارية، وجرائم الفساد، والتحقق من صحتها.</li>
+                                    <li>مباشرة التحقيق في المخالفات الإدارية والمالية وجرائم الفساد، وإقامة الدعوى فيها أمام المحكمة المختصة.</li>
+                                    <li>متابعة استرداد الأموال والعائدات الناتجة عن ارتكاب أي من جرائم الفساد.</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                id: 3,
+                name: "نظام مكافحة الرشوة",
+                year: "1412 هـ",
+                articles: 23,
+                category: "مكافحة الفساد",
+                icon: "fas fa-hand-holding-usd",
+                color: "#e63946",
+                description: "يتناول هذا النظام جرائم الرشوة بأنواعها المختلفة ويحدد العقوبات المقررة للمرتشي والراشي والوسيط، ويضع تدابير لمكافحة هذه الجرائم.",
+                content: `
+                    <div class="system-detail-header">
+                        <div>
+                            <h1 class="system-detail-title">نظام مكافحة الرشوة</h1>
+                            <div class="system-detail-meta">
+                                <div class="system-meta-item">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    <span>سنة الصدور: 1412 هـ</span>
+                                </div>
+                                <div class="system-meta-item">
+                                    <i class="fas fa-file-alt"></i>
+                                    <span>عدد المواد: 23 مادة</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="system-icon" style="background: linear-gradient(135deg, #e63946, #d32f2f);">
+                            <i class="fas fa-hand-holding-usd"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="system-content">
+                        <h3><i class="fas fa-gavel"></i> جرائم الرشوة وعقوباتها</h3>
+                        
+                        <div class="material-item">
+                            <div class="material-number">المادة الأولى</div>
+                            <div class="material-content">
+                                <p>كل موظف عام طلب لنفسه أو لغيره أو قبل أو أخذ وعدا أو عطية لأداء عمل من أعمال وظيفته أو يزعم أنه من أعمال وظيفته ولو كان هذا العمل مشروعا، يعد مرتشيا ويعاقب بالسجن مدة لا تتجاوز عشر سنوات وبغرامة لا تزيد عن مليون ريال أو بإحدى هاتين العقوبتين، ولا يؤثر في قيام الجريمة اتجاه قصد الموظف إلى عدم القيام بالعمل الذي وعد به.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="material-item">
+                            <div class="material-number">المادة الثانية</div>
+                            <div class="material-content">
+                                <p>كل موظف عام طلب لنفسه أو لغيره أو قبل أو أخذ وعدا أو عطية للامتناع عن عمل من أعمال وظيفته أو يزعم أنه من أعمال وظيفته ولو كان هذا الامتناع مشروعا، يعد مرتشيا ويعاقب بالعقوبة المنصوص عليها في المادة الأولى من هذا النظام.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="material-item">
+                            <div class="material-number">المادة الرابعة</div>
+                            <div class="material-content">
+                                <p>كل موظف عام أخل بواجبات وظيفته بأن قام بعمل أو امتنع عن عمل من أعمال تلك الوظيفة نتيجة لرجاء أو توصية أو وساطة، يعد في حكم المرتشي ويعاقب بالسجن مدة لا تتجاوز ثلاث سنوات وبغرامة لا تزيد عن مائة ألف ريال أو بإحدى هاتين العقوبتين.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="material-item">
+                            <div class="material-number">المادة التاسعة</div>
+                            <div class="material-content">
+                                <p>من عرض رشوة ولم تقبل منه يعاقب بالسجن مدة لا تتجاوز عشر سنوات وبغرامة لا تزيد عن مليون ريال أو بإحدى هاتين العقوبتين.</p>
+                            </div>
+                        </div>
+                        
+                        <h3><i class="fas fa-user-tie"></i> تعريف الموظف العام</h3>
+                        
+                        <div class="material-item">
+                            <div class="material-number">المادة الثامنة</div>
+                            <div class="material-content">
+                                <p>يعد في حكم الموظف العام في تطبيق أحكام هذا النظام:</p>
+                                <ol>
+                                    <li>كل من يعمل لدى الدولة أو لدى أحد الأجهزة ذات الشخصية المعنوية العامة سواء كان يعمل بصفة دائمة أو مؤقتة.</li>
+                                    <li>المحكم أو الخبير المعين من قبل الحكومة أو أية هيئة لها اختصاص قضائي.</li>
+                                    <li>كل مكلف من جهة حكومية أو أية سلطة إدارية أخرى بأداء مهمة معينة.</li>
+                                    <li>كل من يعمل لدى الشركات أو المؤسسات الفردية التي تقوم بإدارة وتشغيل المرافق العامة أو صيانتها.</li>
+                                    <li>رؤساء وأعضاء مجالس إدارات الشركات المنصوص عليها في الفقرة الرابعة من هذه المادة.</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                id: 4,
+                name: "نظام مكافحة غسل الأموال",
+                year: "1446 هـ",
+                articles: 44,
+                category: "مالي",
+                icon: "fas fa-money-bill-wave",
+                color: "#f4b942",
+                description: "يهدف هذا النظام إلى مكافحة غسل الأموال وتمويل الإرهاب، ويحدد الالتزامات الملقاة على المؤسسات المالية وغير المالية في مجال مكافحة هذه الجرائم.",
+                content: `
+                    <div class="system-detail-header">
+                        <div>
+                            <h1 class="system-detail-title">نظام مكافحة غسل الأموال</h1>
+                            <div class="system-detail-meta">
+                                <div class="system-meta-item">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    <span>سنة الصدور: 1446 هـ</span>
+                                </div>
+                                <div class="system-meta-item">
+                                    <i class="fas fa-file-alt"></i>
+                                    <span>عدد المواد: 44 مادة</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="system-icon" style="background: linear-gradient(135deg, #f4b942, #e6a931);">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="system-content">
+                        <h3><i class="fas fa-balance-scale"></i> أحكام عامة</h3>
+                        
+                        <div class="material-item">
+                            <div class="material-number">المادة الرابعة</div>
+                            <div class="material-content">
+                                <p>تعد جريمة غسل الأموال جريمة مستقلة عن الجريمة الأصلية، ولا تُلزم إدانة الشخص بارتكاب الجريمة الأصلية من أجل إدانته بجريمة غسل الأموال أو من أجل اعتبار الأموال متحصلات جريمة، سواء ارتكبت الجريمة الأصلية داخل المملكة أو خارجها.</p>
+                                <p>يتحقق من القصد أو العلم أو الغرض في ارتكاب جريمة غسل الأموال من خلال الظروف والملابسات الموضوعية والواقعية للقضية.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="material-item">
+                            <div class="material-number">المادة السادسة</div>
+                            <div class="material-content">
+                                <p>لا يجوز للمؤسسات المالية أن تفتح أو تحتفظ بحسابات مرقمة أو مجهولة الاسم أو باسم وهمي.</p>
+                            </div>
+                        </div>
+                        
+                        <h3><i class="fas fa-shield-alt"></i> الالتزامات والإجراءات</h3>
+                        
+                        <div class="material-item">
+                            <div class="material-number">المادة الثامنة</div>
+                            <div class="material-content">
+                                <p>على المؤسسات المالية، والأعمال والمهن غير المالية المحددة؛ استخدام أدوات مناسبة لتحديد ما إذا كان العميل أو المستفيد الحقيقي مكلفاً أو أصبح مكلفاً بمهام عامة عليا في المملكة أو دولة أجنبية أو مناصب إدارية عليا في إحدى المنظمات الدولية.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="material-item">
+                            <div class="material-number">المادة الثانية عشرة</div>
+                            <div class="material-content">
+                                <p>على المؤسسات المالية، والأعمال والمهن غير المالية المحددة؛ الاحتفاظ بجميع السجلات والمستندات والوثائق والبيانات، لجميع المعاملات المالية والصفقات التجارية والنقدية، سواء أكانت محلية أم خارجية، وذلك لمدة لا تقل عن عشر سنوات من تاريخ انتهاء العملية أو قفل الحساب.</p>
+                            </div>
+                        </div>
+                        
+                        <h3><i class="fas fa-gavel"></i> العقوبات</h3>
+                        
+                        <div class="material-item">
+                            <div class="material-number">المادة السابعة والعشرون</div>
+                            <div class="material-content">
+                                <p>يعاقب كل من يرتكب جريمة غسل الأموال- المنصوص عليها في المادة (الثانية) من النظام- بالسجن مدة لا تقل عن ثلاث سنوات ولا تتجاوز خمس عشرة سنة، أو بغرامة لا تزيد على سبعة ملايين ريال، أو بكلا العقوبتين.</p>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                id: 5,
+                name: "نظام الخدمة المدنية",
+                year: "1397 هـ",
+                articles: 41,
+                category: "إداري",
+                icon: "fas fa-user-tie",
+                color: "#6c757d",
+                description: "ينظم هذا النظام شؤون الموظفين العموميين في الدولة، ويحدد حقوقهم وواجباتهم، ويرسم القواعد الأساسية للخدمة المدنية.",
+                content: `
+                    <div class="system-detail-header">
+                        <div>
+                            <h1 class="system-detail-title">نظام الخدمة المدنية</h1>
+                            <div class="system-detail-meta">
+                                <div class="system-meta-item">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    <span>سنة الصدور: 1397 هـ</span>
+                                </div>
+                                <div class="system-meta-item">
+                                    <i class="fas fa-file-alt"></i>
+                                    <span>عدد المواد: 41 مادة</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="system-icon" style="background: linear-gradient(135deg, #6c757d, #495057);">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="system-content">
+                        <h3><i class="fas fa-tasks"></i> أحكام عامة</h3>
+                        
+                        <div class="material-item">
+                            <div class="material-number">المادة الثامنة</div>
+                            <div class="material-content">
+                                <p>الموظف الذي لا يباشر مهام وظيفته دون عذر مشروع خلال خمسة عشر (١٥) يوماً من تاريخ إبلاغه قرار التعيين، يلغى قرار تعيينه ويعتبر كأن لم يكن.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="material-item">
+                            <div class="material-number">المادة الثالثة والثلاثون</div>
+                            <div class="material-content">
+                                <p>لا يجوز تعيين الموظف على أكثر من وظيفة واحدة.</p>
+                            </div>
+                        </div>
+                        
+                        <h3><i class="fas fa-ban"></i> محظورات النظام</h3>
+                        
+                        <div class="material-item">
+                            <div class="material-number">المادة (محظورات النظام)</div>
+                            <div class="material-content">
+                                <p>د- قبول الهدايا أو الإكراميات أو ما في حكمها بالذات أو بالوساطة لقصد الإغراء من أرباب المصالح.</p>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                id: 6,
+                name: "قواعد السلوك الوظيفي",
+                year: "1446 هـ",
+                articles: 23,
+                category: "إداري",
+                icon: "fas fa-clipboard-check",
+                color: "#6f42c1",
+                description: "يضع هذا النظام القواعد والأخلاقيات الواجب اتباعها من قبل الموظفين العامين في تعاملاتهم وسلوكياتهم الوظيفية.",
+                content: `
+                    <div class="system-detail-header">
+                        <div>
+                            <h1 class="system-detail-title">قواعد السلوك الوظيفي</h1>
+                            <div class="system-detail-meta">
+                                <div class="system-meta-item">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    <span>سنة الصدور: 1446 هـ</span>
+                                </div>
+                                <div class="system-meta-item">
+                                    <i class="fas fa-file-alt"></i>
+                                    <span>عدد المواد: 23 مادة</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="system-icon" style="background: linear-gradient(135deg, #6f42c1, #5a2d9c);">
+                            <i class="fas fa-clipboard-check"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="system-content">
+                        <h3><i class="fas fa-users"></i> قواعد التعامل</h3>
+                        
+                        <div class="material-item">
+                            <div class="material-number">قاعدة العناية بالجمهور</div>
+                            <div class="material-content">
+                                <p>العناية والرفق في التعامل مع الجمهور وبالأخص ذوي الاحتياجات الخاصة وكبار السن والنساء وتقديم العون والمساعدة.</p>
+                            </div>
+                        </div>
+                        
+                        <h3><i class="fas fa-ban"></i> المحظورات</h3>
+                        
+                        <div class="material-item">
+                            <div class="material-number">المادة الخامسة عشرة</div>
+                            <div class="material-content">
+                                <p>قبول أي تكريم أو وسام أو هدية أو جائزة من أي حكومة خارجية دون الحصول على موافقة رسمية (محظور).</p>
+                            </div>
+                        </div>
+                    </div>
+                `
+            }
+        ];
+
+        // بيانات العقوبات المحسنة (مجموعة حسب النظام)
+        const penaltiesData = [
+            {
+                system: "النظام الجزائي لجرائم التزوير",
+                penalties: [
+                    {
+                        id: 1,
+                        crime: "تزوير خاتم الدولة، أو خاتم الملك أو ولي العهد أو رئيس مجلس الوزراء أو أحد نوابه، أو خاتم الديوان الملكي أو ديوان ولي العهد",
+                        article: "المادة الثالثة",
+                        penalty: "السجن من ثلاث إلى عشر سنوات وبغرامة لا تزيد على مليون ريال",
+                        severity: "severe"
+                    },
+                    {
+                        id: 2,
+                        crime: "تزوير خاتماً أو علامة منسوبة إلى جهة عامة، أو إلى أحد موظفيها بصفته الوظيفية",
+                        article: "المادة الرابعة",
+                        penalty: "السجن من سنة إلى سبع سنوات وبغرامة لا تزيد على سبعمائة ألف ريال",
+                        severity: "severe"
+                    },
+                    {
+                        id: 3,
+                        crime: "تزوير محرر منسوب إلى الملك، أو ولي العهد، أو رئيس مجلس الوزراء، أو أحد نوابه",
+                        article: "المادة العاشرة",
+                        penalty: "السجن من ثلاث إلى عشر سنوات وبغرامة لا تزيد على مليون ريال",
+                        severity: "severe"
+                    },
+                    {
+                        id: 4,
+                        crime: "تزوير سندات أو أوراق ذات قيمة مما تصدره الخزينة العامة",
+                        article: "المادة الحادية عشرة",
+                        penalty: "السجن من سنتين إلى سبع سنوات وبغرامة لا تزيد على مليون ريال، مع إلزامه بدفع ما فوته على الخزينة العامة",
+                        severity: "severe"
+                    },
+                    {
+                        id: 5,
+                        crime: "تزوير محرر منسوباً إلى جهة عامة أو أحد موظفيها بصفته الوظيفية",
+                        article: "المادة الثامنة",
+                        penalty: "السجن من سنة إلى خمس سنوات وبغرامة لا تزيد على خمسمائة ألف ريال",
+                        severity: "medium"
+                    },
+                    {
+                        id: 6,
+                        crime: "تزوير موظف عام لمحرر مما يختص بتحريره",
+                        article: "المادة الثانية عشرة",
+                        penalty: "السجن من سنة إلى سبع سنوات وبغرامة لا تزيد على سبعمائة ألف ريال",
+                        severity: "medium"
+                    },
+                    {
+                        id: 7,
+                        crime: "تزوير أوراق تجارية أو مالية أو الأوراق الخاصة بالمصارف، أو وثائق تأمين",
+                        article: "المادة الثالثة عشرة",
+                        penalty: "السجن من سنة إلى خمس سنوات وبغرامة لا تزيد على أربعمائة ألف ريال",
+                        severity: "medium"
+                    },
+                    {
+                        id: 8,
+                        crime: "تزوير ختم جهة غير عامة",
+                        article: "المادة الخامسة",
+                        penalty: "السجن مدة لا تتجاوز ثلاث سنوات وبغرامة لا تزيد على ثلاثمائة ألف ريال، أو بإحدى هاتين العقوبتين",
+                        severity: "light"
+                    },
+                    {
+                        id: 9,
+                        crime: "تزوير محرر عرفي",
+                        article: "المادة التاسعة",
+                        penalty: "السجن مدة لا تتجاوز ثلاث سنوات وبغرامة لا تزيد على ثلاثمائة ألف ريال، أو بإحدى هاتين العقوبتين",
+                        severity: "light"
+                    },
+                    {
+                        id: 10,
+                        crime: "تزوير طابعاً",
+                        article: "المادة السادسة",
+                        penalty: "السجن مدة لا تتجاوز خمس سنوات، وبغرامة لا تزيد على خمسمائة ألف ريال، مع إلزامه بدفع ما فوته على الخزينة العامة",
+                        severity: "medium"
+                    },
+                    {
+                        id: 11,
+                        crime: "تزوير أو منح تقريراً أو شهادة طبيةً على خلاف الحقيقة",
+                        article: "المادة الرابعة عشرة",
+                        penalty: "السجن مدة لا تتجاوز سنة وبغرامة لا تزيد على مائة ألف ريال، أو بإحدى هاتين العقوبتين",
+                        severity: "light"
+                    },
+                    {
+                        id: 12,
+                        crime: "تزوير في أوراق إجابات الاختبارات الدراسية أو بيانات رصد نتائجها",
+                        article: "المادة الخامسة عشرة",
+                        penalty: "السجن مدة لا تتجاوز سنة أشهر وبغرامة لا تزيد على ستين ألف ريال، أو بإحدى هاتين العقوبتين",
+                        severity: "light"
+                    },
+                    {
+                        id: 13,
+                        crime: "تزوير في محرر معد لإثبات حضور الموظف إلى عمله أو انصرافه منه",
+                        article: "المادة السادسة عشرة",
+                        penalty: "السجن مدة لا تتجاوز ثلاثة أشهر وبغرامة لا تزيد على ثلاثين ألف ريال، أو بإحدى هاتين العقوبتين",
+                        severity: "light"
+                    },
+                    {
+                        id: 14,
+                        crime: "إعادة استعمال طابع سبق تحصيل قيمته",
+                        article: "المادة السابعة",
+                        penalty: "السجن مدة لا تتجاوز ثلاثة أشهر، وبغرامة لا تزيد على ثلاثين ألف ريال، أو بإحدى هاتين العقوبتين، مع إلزامه بدفع ما فوته على الخزينة العامة",
+                        severity: "light"
+                    },
+                    {
+                        id: 15,
+                        crime: "تزوير وثيقة تاريخية",
+                        article: "المادة الثامنة عشرة",
+                        penalty: "السجن مدة لا تتجاوز ثمانية أشهر وبغرامة لا تزيد على ثمانين ألف ريال، أو بإحدى هاتين العقوبتين",
+                        severity: "light"
+                    }
+                ]
+            },
+            {
+                system: "نظام مكافحة الرشوة",
+                penalties: [
+                    {
+                        id: 16,
+                        crime: "طلب أو قبول رشوة لأداء عمل من أعمال الوظيفة أو الامتناع عنه",
+                        article: "المادتان الأولى والثانية",
+                        penalty: "السجن مدة لا تتجاوز عشر سنوات وبغرامة لا تزيد عن مليون ريال أو بإحدى هاتين العقوبتين",
+                        severity: "severe"
+                    },
+                    {
+                        id: 17,
+                        crime: "طلب أو قبول رشوة للإخلال بواجبات الوظيفة",
+                        article: "المادة الثالثة",
+                        penalty: "السجن مدة لا تتجاوز عشر سنوات وبغرامة لا تزيد عن مليون ريال أو بإحدى هاتين العقوبتين",
+                        severity: "severe"
+                    },
+                    {
+                        id: 18,
+                        crime: "الإخلال بواجبات الوظيفة نتيجة لرجاء أو توصية أو وساطة",
+                        article: "المادة الرابعة",
+                        penalty: "السجن مدة لا تتجاوز ثلاث سنوات وبغرامة لا تزيد عن مائة ألف ريال أو بإحدى هاتين العقوبتين",
+                        severity: "medium"
+                    },
+                    {
+                        id: 19,
+                        crime: "طلب أو قبول رشوة لاستعمال نفوذ حقيقي أو مزعوم",
+                        article: "المادة الخامسة",
+                        penalty: "السجن مدة لا تتجاوز عشر سنوات وبغرامة لا تزيد عن مليون ريال أو بإحدى هاتين العقوبتين",
+                        severity: "severe"
+                    },
+                    {
+                        id: 20,
+                        crime: "طلب أو قبول رشوة بسبب الوظيفة لمتابعة معاملة في جهة حكومية",
+                        article: "المادة السادسة",
+                        penalty: "السجن مدة لا تتجاوز سنتين وبغرامة لا تزيد عن خمسين ألف ريال أو بإحدى هاتين العقوبتين",
+                        severity: "medium"
+                    },
+                    {
+                        id: 21,
+                        crime: "عرض رشوة ولم تقبل",
+                        article: "المادة التاسعة",
+                        penalty: "السجن مدة لا تتجاوز عشر سنوات وبغرامة لا تزيد عن مليون ريال أو بإحدى هاتين العقوبتين",
+                        severity: "severe"
+                    }
+                ]
+            },
+            {
+                system: "نظام مكافحة غسل الأموال",
+                penalties: [
+                    {
+                        id: 22,
+                        crime: "غسل الأموال",
+                        article: "المادة السابعة والعشرون",
+                        penalty: "السجن مدة لا تقل عن ثلاث سنوات ولا تتجاوز خمس عشرة سنة، أو بغرامة لا تزيد على سبعة ملايين ريال، أو بكلا العقوبتين",
+                        severity: "severe"
+                    }
+                ]
+            }
+        ];
+
+        // بيانات الأسئلة
+        const quizQuestions = [
+            {
+                id: 1,
+                question: "ما تعريف التزوير حسب النظام الجزائي لجرائم التزوير؟",
+                options: [
+                    "كل تغيير للحقيقة بإحدى الطرق المنصوص عليها في النظام، يحدث بسوء نية",
+                    "كل مخالفة للقوانين والأنظمة المعمول بها",
+                    "كل اعتداء على المال العام",
+                    "كل إخلال بواجبات الوظيفة"
+                ],
+                correctAnswer: 0,
+                system: "النظام الجزائي لجرائم التزوير"
+            },
+            {
+                id: 2,
+                question: "ما عقوبة تزوير خاتم الدولة أو خاتم الملك حسب النظام الجزائي؟",
+                options: [
+                    "السجن من ثلاث إلى عشر سنوات وبغرامة لا تزيد على مليون ريال",
+                    "السجن من سنة إلى خمس سنوات وبغرامة لا تزيد على خمسمائة ألف ريال",
+                    "السجن مدة لا تتجاوز ثلاث سنوات وبغرامة لا تزيد على ثلاثمائة ألف ريال",
+                    "السجن مدة لا تتجاوز سنة وبغرامة لا تزيد على مائة ألف ريال"
+                ],
+                correctAnswer: 0,
+                system: "النظام الجزائي لجرائم التزوير"
+            },
+            {
+                id: 3,
+                question: "ما هي عقوبة الرشوة (طلب أو قبول رشوة لأداء عمل وظيفي) حسب نظام مكافحة الرشوة؟",
+                options: [
+                    "السجن مدة لا تتجاوز عشر سنوات وبغرامة لا تزيد عن مليون ريال",
+                    "السجن مدة لا تتجاوز خمس سنوات وبغرامة لا تزيد على خمسمائة ألف ريال",
+                    "السجن مدة لا تتجاوز ثلاث سنوات وبغرامة لا تزيد على ثلاثمائة ألف ريال",
+                    "السجن مدة لا تتجاوز سنة وبغرامة لا تزيد على مائة ألف ريال"
+                ],
+                correctAnswer: 0,
+                system: "نظام مكافحة الرشوة"
+            },
+            {
+                id: 4,
+                question: "ما هي مدة السجن المقررة لتزوير محرر منسوب إلى جهة عامة؟",
+                options: [
+                    "من سنة إلى خمس سنوات",
+                    "من ثلاث إلى عشر سنوات",
+                    "من سنتين إلى سبع سنوات",
+                    "لا تتجاوز ثلاث سنوات"
+                ],
+                correctAnswer: 0,
+                system: "النظام الجزائي لجرائم التزوير"
+            },
+            {
+                id: 5,
+                question: "ما هي عقوبة تزوير الشهادات الطبية حسب النظام الجزائي؟",
+                options: [
+                    "السجن مدة لا تتجاوز سنة وبغرامة لا تزيد على مائة ألف ريال",
+                    "السجن مدة لا تتجاوز ثلاث سنوات وبغرامة لا تزيد على ثلاثمائة ألف ريال",
+                    "السجن من سنة إلى خمس سنوات وبغرامة لا تزيد على خمسمائة ألف ريال",
+                    "السجن من ثلاث إلى عشر سنوات وبغرامة لا تزيد على مليون ريال"
+                ],
+                correctAnswer: 0,
+                system: "النظام الجزائي لجرائم التزوير"
+            },
+            {
+                id: 6,
+                question: "كم عدد طرق التزوير المنصوص عليها في النظام الجزائي؟",
+                options: [
+                    "ثماني طرق",
+                    "خمس طرق",
+                    "عشر طرق",
+                    "ست طرق"
+                ],
+                correctAnswer: 0,
+                system: "النظام الجزائي لجرائم التزوير"
+            },
+            {
+                id: 7,
+                question: "ما عقوبة الإخلال بواجبات الوظيفة نتيجة لرجاء أو توصية أو وساطة؟",
+                options: [
+                    "السجن مدة لا تتجاوز ثلاث سنوات وبغرامة لا تزيد عن مائة ألف ريال",
+                    "السجن مدة لا تتجاوز عشر سنوات وبغرامة لا تزيد عن مليون ريال",
+                    "السجن من سنة إلى خمس سنوات وبغرامة لا تزيد على خمسمائة ألف ريال",
+                    "السجن مدة لا تتجاوز سنة وبغرامة لا تزيد على مائة ألف ريال"
+                ],
+                correctAnswer: 0,
+                system: "نظام مكافحة الرشوة"
+            },
+            {
+                id: 8,
+                question: "ما هي عقوبة غسل الأموال حسب نظام مكافحة غسل الأموال؟",
+                options: [
+                    "السجن مدة لا تقل عن ثلاث سنوات ولا تتجاوز خمس عشرة سنة، أو بغرامة لا تزيد على سبعة ملايين ريال",
+                    "السجن من ثلاث إلى عشر سنوات وبغرامة لا تزيد على مليون ريال",
+                    "السجن مدة لا تتجاوز عشر سنوات وبغرامة لا تزيد عن مليون ريال",
+                    "السجن من سنة إلى سبع سنوات وبغرامة لا تزيد على سبعمائة ألف ريال"
+                ],
+                correctAnswer: 0,
+                system: "نظام مكافحة غسل الأموال"
+            },
+            {
+                id: 9,
+                question: "ما هي عقوبة تزوير في محرر لإثبات حضور الموظف إلى عمله أو انصرافه منه؟",
+                options: [
+                    "السجن مدة لا تتجاوز ثلاثة أشهر وبغرامة لا تزيد على ثلاثين ألف ريال",
+                    "السجن مدة لا تتجاوز سنة وبغرامة لا تزيد على مائة ألف ريال",
+                    "السجن مدة لا تتجاوز سنة أشهر وبغرامة لا تزيد على ستين ألف ريال",
+                    "السجن مدة لا تتجاوز ثمانية أشهر وبغرامة لا تزيد على ثمانين ألف ريال"
+                ],
+                correctAnswer: 0,
+                system: "النظام الجزائي لجرائم التزوير"
+            },
+            {
+                id: 10,
+                question: "ما هو تعريف المحرر حسب النظام الجزائي لجرائم التزوير؟",
+                options: [
+                    "كل مسطور يتضمن حروفاً أو علامات ينقل بقارئها الفكر إلى معنى معين",
+                    "كل وثيقة رسمية صادرة من جهة حكومية",
+                    "كل عقد أو اتفاق بين طرفين",
+                    "كل مستند مالي أو تجاري"
+                ],
+                correctAnswer: 0,
+                system: "النظام الجزائي لجرائم التزوير"
+            }
+        ];
+
+        // متغيرات التطبيق
+        let currentSection = 'home';
+        let currentQuizQuestion = 0;
+        let quizScore = 0;
+        let selectedAnswer = null;
+        let quizTimeLeft = 300;
+        let quizTimer = null;
+        let usedQuestions = [];
+
+        // تهيئة الموقع عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            // تهيئة التنقل بين الأقسام
+            initNavigation();
+            
+            // تعبئة قسم الأنظمة
+            populateSystems();
+            
+            // تعبئة قسم العقوبات
+            populatePenalties();
+            
+            // تهيئة نظام الاختبارات
+            initQuiz();
+            
+            // إضافة مستمعي الأحداث للبحث والتصفية
+            initSearchFilters();
+            
+            // إضافة تأثيرات للبطاقات
+            initCardAnimations();
+        });
+
+        // تهيئة التنقل بين الأقسام
+        function initNavigation() {
+            const navLinks = document.querySelectorAll('nav a, .footer-links a');
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mainNav = document.getElementById('mainNav');
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const sectionId = this.getAttribute('data-section');
+                    showSection(sectionId);
+                    
+                    if (window.innerWidth <= 768) {
+                        mainNav.classList.remove('active');
+                    }
+                });
+            });
+            
+            mobileMenuBtn.addEventListener('click', function() {
+                mainNav.classList.toggle('active');
+            });
+            
+            document.getElementById('backToSystems').addEventListener('click', function() {
+                showSection('systems');
+            });
+        }
+
+        // عرض قسم معين
+        function showSection(sectionId) {
+            document.querySelectorAll('nav a').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('data-section') === sectionId) {
+                    link.classList.add('active');
+                }
+            });
+            
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.add('hidden');
+            });
+            
+            document.getElementById(sectionId).classList.remove('hidden');
+            currentSection = sectionId;
+            
+            if (sectionId === 'systems') {
+                document.getElementById('systemDetail').classList.add('hidden');
+                document.getElementById('systemsList').classList.remove('hidden');
+            }
+            
+            if (sectionId === 'quiz') {
+                startNewQuiz();
+            }
+        }
+
+        // تعبئة قسم الأنظمة
+        function populateSystems() {
+            const container = document.getElementById('systemsList');
+            container.innerHTML = '';
+            
+            systemsData.forEach(system => {
+                const systemCard = document.createElement('div');
+                systemCard.className = 'system-card';
+                systemCard.style.borderTopColor = system.color;
+                systemCard.innerHTML = `
+                    <div class="system-card-header">
+                        <div class="system-icon" style="background: linear-gradient(135deg, ${system.color}, ${getDarkerColor(system.color)});">
+                            <i class="${system.icon}"></i>
+                        </div>
+                        <span class="system-badge" style="background-color: ${getLightColor(system.color)}; color: ${system.color};">${system.category}</span>
+                    </div>
+                    <h3>${system.name}</h3>
+                    <div class="system-meta">
+                        <div class="system-meta-item">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>${system.year}</span>
+                        </div>
+                        <div class="system-meta-item">
+                            <i class="fas fa-file-alt"></i>
+                            <span>${system.articles} مادة</span>
+                        </div>
+                    </div>
+                    <p class="system-description">${system.description}</p>
+                    <div class="system-actions">
+                        <button class="btn btn-primary view-system-detail" data-id="${system.id}">
+                            <i class="fas fa-eye"></i> عرض النظام
+                        </button>
+                        <button class="btn btn-secondary view-penalties" data-system="${system.name}">
+                            <i class="fas fa-gavel"></i> عقوباته
+                        </button>
+                    </div>
+                `;
+                
+                container.appendChild(systemCard);
+            });
+            
+            // إضافة مستمعي الأحداث
+            document.querySelectorAll('.view-system-detail').forEach(button => {
+                button.addEventListener('click', function() {
+                    const systemId = parseInt(this.getAttribute('data-id'));
+                    showSystemDetail(systemId);
+                });
+            });
+            
+            document.querySelectorAll('.view-penalties').forEach(button => {
+                button.addEventListener('click', function() {
+                    const systemName = this.getAttribute('data-system');
+                    showSection('penalties');
+                    
+                    // تصفية العقوبات حسب النظام
+                    setTimeout(() => {
+                        document.getElementById('penaltySearch').value = systemName;
+                        filterPenalties();
+                    }, 100);
+                });
+            });
+        }
+
+        // عرض تفاصيل النظام
+        function showSystemDetail(systemId) {
+            const system = systemsData.find(s => s.id === systemId);
+            if (!system) return;
+            
+            document.getElementById('systemDetailContent').innerHTML = system.content;
+            document.getElementById('systemDetail').classList.remove('hidden');
+            document.getElementById('systemsList').classList.add('hidden');
+        }
+
+        // تعبئة قسم العقوبات
+        function populatePenalties() {
+            const container = document.getElementById('penaltiesList');
+            container.innerHTML = '';
+            
+            penaltiesData.forEach(systemGroup => {
+                const groupElement = document.createElement('div');
+                groupElement.className = 'system-penalties-group';
+                groupElement.setAttribute('data-system', systemGroup.system);
+                
+                let penaltiesHTML = '';
+                systemGroup.penalties.forEach(penalty => {
+                    let severityClass = '';
+                    let severityBadge = '';
+                    
+                    if (penalty.severity === 'severe') {
+                        severityClass = 'severe';
+                        severityBadge = '<span class="penalty-severity severe-badge">شديدة</span>';
+                    } else if (penalty.severity === 'medium') {
+                        severityClass = 'medium';
+                        severityBadge = '<span class="penalty-severity medium-badge">متوسطة</span>';
+                    } else {
+                        severityClass = 'light';
+                        severityBadge = '<span class="penalty-severity light-badge">خفيفة</span>';
+                    }
+                    
+                    penaltiesHTML += `
+                        <div class="penalty-card ${severityClass}" data-severity="${penalty.severity}" data-system="${systemGroup.system}">
+                            <div class="penalty-card-header">
+                                <div class="penalty-article">${penalty.article}</div>
+                                ${severityBadge}
+                            </div>
+                            <h4 class="penalty-title">${penalty.crime}</h4>
+                            <div class="penalty-details">
+                                <p><strong>النظام:</strong> ${systemGroup.system}</p>
+                            </div>
+                            <div class="penalty-sentence">
+                                <i class="fas fa-balance-scale-left"></i>
+                                ${penalty.penalty}
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                groupElement.innerHTML = `
+                    <h3><i class="fas fa-gavel"></i> ${systemGroup.system}</h3>
+                    <div class="penalties-grid">
+                        ${penaltiesHTML}
+                    </div>
+                `;
+                
+                container.appendChild(groupElement);
+            });
+        }
+
+        // تهيئة البحث والتصفية
+        function initSearchFilters() {
+            // البحث في الأنظمة
+            const systemSearch = document.getElementById('systemSearch');
+            const systemFilter = document.getElementById('systemFilter');
+            
+            systemSearch.addEventListener('input', filterSystems);
+            systemFilter.addEventListener('change', filterSystems);
+            
+            // البحث في العقوبات
+            const penaltySearch = document.getElementById('penaltySearch');
+            const penaltyFilter = document.getElementById('penaltyFilter');
+            
+            penaltySearch.addEventListener('input', filterPenalties);
+            penaltyFilter.addEventListener('change', filterPenalties);
+        }
+
+        // تصفية الأنظمة
+        function filterSystems() {
+            const searchTerm = document.getElementById('systemSearch').value.toLowerCase();
+            const filterValue = document.getElementById('systemFilter').value;
+            
+            const systemCards = document.querySelectorAll('.system-card');
+            let visibleCount = 0;
+            
+            systemCards.forEach(card => {
+                const systemName = card.querySelector('h3').textContent.toLowerCase();
+                const systemDescription = card.querySelector('.system-description').textContent.toLowerCase();
+                const systemCategory = card.querySelector('.system-badge').textContent;
+                
+                let categoryMatch = true;
+                if (filterValue !== 'all') {
+                    const categoryMap = {
+                        'anti-corruption': 'مكافحة الفساد',
+                        'criminal': 'جزائي',
+                        'financial': 'مالي',
+                        'administrative': 'إداري'
+                    };
+                    
+                    categoryMatch = systemCategory === categoryMap[filterValue];
+                }
+                
+                const textMatch = systemName.includes(searchTerm) || 
+                                 systemDescription.includes(searchTerm) ||
+                                 searchTerm === '';
+                
+                if (textMatch && categoryMatch) {
+                    card.style.display = 'flex';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            // عرض رسالة إذا لم توجد نتائج
+            const container = document.getElementById('systemsList');
+            let noResults = container.querySelector('.no-results');
+            
+            if (visibleCount === 0) {
+                if (!noResults) {
+                    noResults = document.createElement('div');
+                    noResults.className = 'no-results';
+                    noResults.innerHTML = `
+                        <i class="fas fa-search"></i>
+                        <h3>لا توجد أنظمة تطابق بحثك</h3>
+                        <p>جرب تغيير كلمات البحث أو تغيير التصنيف</p>
+                    `;
+                    container.appendChild(noResults);
+                }
+            } else if (noResults) {
+                noResults.remove();
+            }
+        }
+
+        // تصفية العقوبات
+        function filterPenalties() {
+            const searchTerm = document.getElementById('penaltySearch').value.toLowerCase();
+            const filterValue = document.getElementById('penaltyFilter').value;
+            
+            const penaltyGroups = document.querySelectorAll('.system-penalties-group');
+            let totalVisible = 0;
+            
+            penaltyGroups.forEach(group => {
+                const systemName = group.querySelector('h3').textContent.toLowerCase();
+                const penalties = group.querySelectorAll('.penalty-card');
+                let groupVisible = 0;
+                
+                penalties.forEach(penalty => {
+                    const penaltyTitle = penalty.querySelector('.penalty-title').textContent.toLowerCase();
+                    const penaltyDetails = penalty.querySelector('.penalty-details').textContent.toLowerCase();
+                    const penaltySentence = penalty.querySelector('.penalty-sentence').textContent.toLowerCase();
+                    const penaltySeverity = penalty.getAttribute('data-severity');
+                    
+                    let severityMatch = true;
+                    if (filterValue !== 'all') {
+                        severityMatch = penaltySeverity === filterValue;
+                    }
+                    
+                    const textMatch = penaltyTitle.includes(searchTerm) || 
+                                     penaltyDetails.includes(searchTerm) || 
+                                     penaltySentence.includes(searchTerm) ||
+                                     systemName.includes(searchTerm) ||
+                                     searchTerm === '';
+                    
+                    if (textMatch && severityMatch) {
+                        penalty.style.display = 'block';
+                        groupVisible++;
+                        totalVisible++;
+                    } else {
+                        penalty.style.display = 'none';
+                    }
+                });
+                
+                // إظهار أو إخفاء مجموعة النظام
+                if (groupVisible > 0) {
+                    group.style.display = 'block';
+                } else {
+                    group.style.display = 'none';
+                }
+            });
+            
+            // عرض رسالة إذا لم توجد نتائج
+            const container = document.getElementById('penaltiesList');
+            let noResults = container.querySelector('.no-results');
+            
+            if (totalVisible === 0) {
+                if (!noResults) {
+                    noResults = document.createElement('div');
+                    noResults.className = 'no-results';
+                    noResults.innerHTML = `
+                        <i class="fas fa-search"></i>
+                        <h3>لا توجد عقوبات تطابق بحثك</h3>
+                        <p>جرب تغيير كلمات البحث أو تغيير تصنيف العقوبة</p>
+                    `;
+                    container.insertBefore(noResults, container.firstChild);
+                }
+            } else if (noResults) {
+                noResults.remove();
+            }
+        }
+
+        // تهيئة نظام الاختبارات
+        function initQuiz() {
+            document.getElementById('nextQuestionBtn').addEventListener('click', function() {
+                if (selectedAnswer !== null) {
+                    checkAnswer();
+                    
+                    setTimeout(() => {
+                        nextQuestion();
+                    }, 1000);
+                } else {
+                    alert('يرجى اختيار إجابة قبل الانتقال للسؤال التالي');
+                }
+            });
+            
+            document.getElementById('endQuizBtn').addEventListener('click', function() {
+                if (confirm('هل أنت متأكد من إنهاء الاختبار؟')) {
+                    endQuiz();
+                }
+            });
+            
+            document.getElementById('restartQuizBtn').addEventListener('click', function() {
+                startNewQuiz();
+            });
+        }
+
+        // بدء اختبار جديد
+        function startNewQuiz() {
+            currentQuizQuestion = 0;
+            quizScore = 0;
+            selectedAnswer = null;
+            quizTimeLeft = 300;
+            usedQuestions = [];
+            
+            document.getElementById('quizContainer').classList.remove('hidden');
+            document.getElementById('quizResults').classList.add('hidden');
+            
+            updateQuizUI();
+            showQuestion();
+            startTimer();
+        }
+
+        // بدء المؤقت
+        function startTimer() {
+            clearInterval(quizTimer);
+            
+            quizTimer = setInterval(() => {
+                quizTimeLeft--;
+                updateTimerDisplay();
+                
+                if (quizTimeLeft <= 0) {
+                    clearInterval(quizTimer);
+                    endQuiz();
+                }
+            }, 1000);
+        }
+
+        // تحديث عرض المؤقت
+        function updateTimerDisplay() {
+            const minutes = Math.floor(quizTimeLeft / 60);
+            const seconds = quizTimeLeft % 60;
+            document.getElementById('timer').textContent = `الوقت: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        // عرض سؤال الاختبار
+        function showQuestion() {
+            let questionIndex;
+            do {
+                questionIndex = Math.floor(Math.random() * quizQuestions.length);
+            } while (usedQuestions.includes(questionIndex) && usedQuestions.length < quizQuestions.length);
+            
+            usedQuestions.push(questionIndex);
+            const question = quizQuestions[questionIndex];
+            
+            document.getElementById('questionText').textContent = question.question;
+            
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = '';
+            
+            const optionLetters = ['أ', 'ب', 'ج', 'د'];
+            
+            question.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'quiz-option';
+                optionElement.setAttribute('data-index', index);
+                optionElement.innerHTML = `
+                    <div class="option-letter">${optionLetters[index]}</div>
+                    <div class="option-text">${option}</div>
+                `;
+                
+                optionElement.addEventListener('click', function() {
+                    document.querySelectorAll('.quiz-option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    
+                    this.classList.add('selected');
+                    selectedAnswer = index;
+                });
+                
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            document.getElementById('questionCounter').textContent = `سؤال ${currentQuizQuestion + 1} من 10`;
+            
+            const progress = ((currentQuizQuestion + 1) / 10) * 100;
+            document.getElementById('quizProgress').style.width = `${progress}%`;
+        }
+
+        // التحقق من الإجابة
+        function checkAnswer() {
+            const currentQuestionIndex = usedQuestions[currentQuizQuestion];
+            const question = quizQuestions[currentQuestionIndex];
+            
+            const selectedOption = document.querySelector(`.quiz-option[data-index="${selectedAnswer}"]`);
+            
+            if (selectedAnswer === question.correctAnswer) {
+                selectedOption.classList.add('correct');
+                quizScore++;
+                document.getElementById('score').textContent = `النقاط: ${quizScore}`;
+            } else {
+                selectedOption.classList.add('incorrect');
+                
+                const correctOption = document.querySelector(`.quiz-option[data-index="${question.correctAnswer}"]`);
+                correctOption.classList.add('correct');
+            }
+            
+            document.querySelectorAll('.quiz-option').forEach(opt => {
+                opt.style.pointerEvents = 'none';
+            });
+        }
+
+        // الانتقال للسؤال التالي
+        function nextQuestion() {
+            currentQuizQuestion++;
+            
+            if (currentQuizQuestion < 10) {
+                selectedAnswer = null;
+                showQuestion();
+                
+                document.querySelectorAll('.quiz-option').forEach(opt => {
+                    opt.style.pointerEvents = 'auto';
+                });
+            } else {
+                endQuiz();
+            }
+        }
+
+        // إنهاء الاختبار
+        function endQuiz() {
+            clearInterval(quizTimer);
+            
+            document.getElementById('quizContainer').classList.add('hidden');
+            document.getElementById('quizResults').classList.remove('hidden');
+            
+            document.getElementById('finalScore').textContent = `${quizScore}/10`;
+            
+            let message = '';
+            if (quizScore >= 9) {
+                message = 'ممتاز! لديك معرفة ممتازة بالأنظمة السعودية.';
+            } else if (quizScore >= 7) {
+                message = 'جيد جداً! لديك معرفة جيدة بالأنظمة السعودية.';
+            } else if (quizScore >= 5) {
+                message = 'جيد! يمكنك تحسين معرفتك بالأنظمة السعودية.';
+            } else {
+                message = 'يحتاج إلى تحسين. ننصحك بمراجعة الأنظمة مرة أخرى.';
+            }
+            
+            document.getElementById('resultMessage').textContent = message;
+        }
+
+        // تحديث واجهة الاختبار
+        function updateQuizUI() {
+            document.getElementById('score').textContent = `النقاط: ${quizScore}`;
+            updateTimerDisplay();
+        }
+
+        // تهيئة تأثيرات البطاقات
+        function initCardAnimations() {
+            const cards = document.querySelectorAll('.card, .system-card, .penalty-card');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            cards.forEach(card => {
+                observer.observe(card);
+            });
+        }
+
+        // دوال مساعدة للألوان
+        function getDarkerColor(color) {
+            // تحويل اللون إلى قيمة أغمق
+            return color;
+        }
+        
+        function getLightColor(color) {
+            // تحويل اللون إلى قيمة أفتح
+            return color + '20';
+        }
+
+        // عرض القسم الرئيسي عند تحميل الصفحة
+        showSection('home');
+    </script>
+</body>
+</html>
